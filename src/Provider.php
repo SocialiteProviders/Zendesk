@@ -17,7 +17,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://'.$this->getSubdomain().'.zendesk.com/oauth/authorizations/new', $state);
+        return $this->buildAuthUrlFromBase(
+            'https://'.$this->getSubdomain().'.zendesk.com/oauth/authorizations/new', $state
+        );
     }
 
     /**
@@ -33,7 +35,8 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://'.$this->getSubdomain().'.zendesk.com/api/v2/users/me.json', [
+        $response = $this->getHttpClient()->get(
+            'https://'.$this->getSubdomain().'.zendesk.com/api/v2/users/me.json', [
             'headers' => [
                 'Authorization' => 'Bearer '.$token,
             ],
@@ -48,11 +51,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id'       => $user['id'],
-            'nickname' => null,
-            'name'     => $user['name'],
-            'email'    => $user['email'],
-            'avatar'   => null,
+            'id' => $user['id'], 'nickname' => null, 'name' => $user['name'],
+            'email' => $user['email'], 'avatar' => null,
         ]);
     }
 
@@ -61,7 +61,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenFields($code)
     {
-        return array_merge(parent::getTokenFields($code), ['grant_type' => 'authorization_code']);
+        return array_merge(parent::getTokenFields($code), [
+            'grant_type' => 'authorization_code',
+        ]);
     }
 
     /**
