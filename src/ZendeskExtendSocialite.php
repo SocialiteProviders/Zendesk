@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\Zendesk;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;
